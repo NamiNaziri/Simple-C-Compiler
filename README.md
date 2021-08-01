@@ -130,7 +130,7 @@ char w = ‘q’ .
 
 ## Installation
 
-first you need to install bison and flex
+you need to install bison and flex
 
 * Flex And Bison
   ```
