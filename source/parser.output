@@ -1,0 +1,3454 @@
+Terminals unused in grammar
+
+    ERROR
+
+
+Grammar
+
+    0 $accept: Start $end
+
+    1 Start: %empty
+    2      | Start Function
+    3      | Start Global
+
+    4 Global: GlobalAssignmentDeclaration TOKEN_DOT
+    5       | Declaration TOKEN_DOT
+
+    6 GlobalAssignmentDeclaration: Type TOKEN_IDENTIFIER TOKEN_ASSIGN Value
+
+    7 Value: TOKEN_INT_CONST
+    8      | TOKEN_CHAR_CONST
+
+    9 $@1: %empty
+
+   10 $@2: %empty
+
+   11 Function: Type FuncName $@1 TOKEN_LEFT_PAREN FuncParamsList TOKEN_RIGHT_PAREN $@2 TOKEN_LESS Statements TOKEN_MORE
+
+   12 Type: TOKEN_INT
+   13     | TOKEN_CHAR
+   14     | TOKEN_VOID
+
+   15 FuncName: TOKEN_IDENTIFIER
+   16         | TOKEN_MAIN
+
+   17 FuncParamsList: %empty
+   18               | FunctionParams
+
+   19 FunctionParams: Declaration
+   20               | Declaration TOKEN_COMMA FunctionParams
+
+   21 $@3: %empty
+
+   22 Block: TOKEN_LESS $@3 Statements TOKEN_MORE
+
+   23 Statements: %empty
+   24           | Statements Statement
+
+   25 Statement: TOKEN_DOT
+   26          | FunctionCall TOKEN_DOT
+   27          | Conditional
+   28          | Declaration TOKEN_DOT
+   29          | AssignmentDeclaration TOKEN_DOT
+   30          | ReturnStatement TOKEN_DOT
+   31          | Block
+   32          | TOKEN_BREAK TOKEN_DOT
+   33          | TOKEN_CONTINUE TOKEN_DOT
+   34          | Assignment TOKEN_DOT
+
+   35 ReturnStatement: TOKEN_RETURN Exp
+   36                | TOKEN_RETURN
+
+   37 FunctionCall: FuncName TOKEN_LEFT_PAREN FunctionCallList TOKEN_RIGHT_PAREN
+
+   38 FunctionCallList: %empty
+   39                 | FunctionCallInputs
+
+   40 FunctionCallInputs: FunctionCallInput
+   41                   | FunctionCallInput TOKEN_COMMA FunctionCallInputs
+
+   42 FunctionCallInput: Exp
+
+   43 Exp: TOKEN_INT_CONST
+   44    | TOKEN_CHAR_CONST
+   45    | TOKEN_IDENTIFIER
+   46    | TOKEN_IDENTIFIER TOKEN_LEFT_BRAK Exp TOKEN_RIGHT_BRAK
+   47    | TOKEN_PLUS TOKEN_INT_CONST
+   48    | TOKEN_MINUS TOKEN_INT_CONST
+   49    | Exp TOKEN_PLUS Exp
+   50    | Exp TOKEN_MINUS Exp
+   51    | Exp TOKEN_MULTIPLY Exp
+   52    | Exp TOKEN_DIV Exp
+   53    | Exp TOKEN_LESS Exp
+   54    | Exp TOKEN_LESS_EQU Exp
+   55    | Exp TOKEN_MORE Exp
+   56    | Exp TOKEN_MORE_EQU Exp
+   57    | Exp TOKEN_EQUALS Exp
+   58    | Exp TOKEN_NOT_EQUALS Exp
+   59    | Exp TOKEN_OR Exp
+   60    | Exp TOKEN_AND Exp
+   61    | Exp TOKEN_XOR Exp
+   62    | Exp TOKEN_BIT_OR Exp
+   63    | Exp TOKEN_BIT_AND Exp
+   64    | TOKEN_NOT Exp
+   65    | TOKEN_LEFT_PAREN Exp TOKEN_RIGHT_PAREN
+   66    | TOKEN_MINUS TOKEN_LEFT_PAREN Exp TOKEN_RIGHT_PAREN
+   67    | TOKEN_PLUS TOKEN_LEFT_PAREN Exp TOKEN_RIGHT_PAREN
+   68    | FunctionCall
+
+   69 $@4: %empty
+
+   70 Conditional: $@4 ConditionalIf
+
+   71 $@5: %empty
+
+   72 Conditional: $@5 ConditionalWhile
+
+   73 $@6: %empty
+
+   74 Conditional: $@6 ConditionalFor
+   75            | ConditionalSwitch
+
+   76 $@7: %empty
+
+   77 $@8: %empty
+
+   78 $@9: %empty
+
+   79 ConditionalIf: TOKEN_IF TOKEN_LEFT_PAREN Exp $@7 TOKEN_RIGHT_PAREN Block $@8 $@9 ElseIfs Else
+
+   80 ElseIfs: %empty
+
+   81 $@10: %empty
+
+   82 $@11: %empty
+
+   83 ElseIfs: TOKEN_ELSE_IF TOKEN_LEFT_PAREN Exp $@10 TOKEN_RIGHT_PAREN Block $@11 ElseIfs
+
+   84 Else: %empty
+   85     | TOKEN_ELSE Block
+
+   86 $@12: %empty
+
+   87 $@13: %empty
+
+   88 ConditionalWhile: TOKEN_WHILE TOKEN_LEFT_PAREN $@12 Exp $@13 TOKEN_RIGHT_PAREN Block
+
+   89 $@14: %empty
+
+   90 $@15: %empty
+
+   91 $@16: %empty
+
+   92 $@17: %empty
+
+   93 $@18: %empty
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+   95 ForDeclaration: %empty
+   96               | AssignmentDeclaration
+   97               | Assignment
+
+   98 ForCondition: %empty
+   99             | Exp
+
+  100 ForStep: %empty
+  101        | Assignment
+
+  102 $@19: %empty
+
+  103 $@20: %empty
+
+  104 ConditionalSwitch: TOKEN_SWITCH $@19 TOKEN_LEFT_PAREN Exp $@20 TOKEN_RIGHT_PAREN TOKEN_LESS SwitchCases TOKEN_MORE
+
+  105 $@21: %empty
+
+  106 SwitchCases: NormalCases $@21 DefaultCase
+
+  107 NormalCases: %empty
+
+  108 $@22: %empty
+
+  109 $@23: %empty
+
+  110 NormalCases: NormalCases TOKEN_CASE TOKEN_INT_CONST $@22 TOKEN_COLON $@23 Statements CaseBREAK
+
+  111 DefaultCase: %empty
+  112            | TOKEN_DEFAULT TOKEN_COLON Statements CaseBREAK
+
+  113 CaseBREAK: %empty
+  114          | TOKEN_BREAK TOKEN_SHARP
+
+  115 Declaration: Type TOKEN_IDENTIFIER
+  116            | Type TOKEN_IDENTIFIER TOKEN_LEFT_BRAK TOKEN_INT_CONST TOKEN_RIGHT_BRAK
+
+  117 AssignmentDeclaration: Type TOKEN_IDENTIFIER TOKEN_ASSIGN Exp
+
+  118 Assignment: TOKEN_IDENTIFIER TOKEN_ASSIGN Exp
+  119           | TOKEN_IDENTIFIER TOKEN_LEFT_BRAK Exp TOKEN_RIGHT_BRAK TOKEN_ASSIGN Exp
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    TOKEN_INT <intType> (258) 12
+    TOKEN_CHAR <intType> (259) 13
+    TOKEN_CHAR_CONST <intType> (260) 8 44
+    TOKEN_IF <intType> (261) 79
+    TOKEN_ELSE <intType> (262) 85
+    TOKEN_ELSE_IF <intType> (263) 83
+    TOKEN_WHILE <intType> (264) 88
+    TOKEN_CONTINUE <intType> (265) 33
+    TOKEN_BREAK <intType> (266) 32 114
+    TOKEN_FOR <intType> (267) 94
+    TOKEN_RETURN <intType> (268) 35 36
+    TOKEN_VOID <intType> (269) 14
+    TOKEN_MAIN <strType> (270) 16
+    TOKEN_SWITCH <intType> (271) 104
+    TOKEN_CASE <intType> (272) 110
+    TOKEN_DEFAULT <intType> (273) 112
+    TOKEN_COLON <intType> (274) 110 112
+    TOKEN_IDENTIFIER <strType> (275) 6 15 45 46 115 116 117 118 119
+    TOKEN_INT_CONST <intType> (276) 7 43 47 48 110 116
+    TOKEN_SHARP <intType> (277) 94 114
+    TOKEN_LESS <intType> (278) 11 22 53 94 104
+    TOKEN_MORE <intType> (279) 11 22 55 94 104
+    TOKEN_LESS_EQU <intType> (280) 54
+    TOKEN_MORE_EQU <intType> (281) 56
+    TOKEN_EQUALS <intType> (282) 57
+    TOKEN_NOT_EQUALS <intType> (283) 58
+    TOKEN_BIT_OR <intType> (284) 62
+    TOKEN_BIT_AND <intType> (285) 63
+    TOKEN_OR <intType> (286) 59
+    TOKEN_AND <intType> (287) 60
+    TOKEN_XOR <intType> (288) 61
+    TOKEN_NOT <intType> (289) 64
+    TOKEN_PLUS <intType> (290) 47 49 67
+    TOKEN_MINUS <intType> (291) 48 50 66
+    TOKEN_MULTIPLY <intType> (292) 51
+    TOKEN_DIV <intType> (293) 52
+    TOKEN_ASSIGN <intType> (294) 6 117 118 119
+    TOKEN_LEFT_PAREN <intType> (295) 11 37 65 66 67 79 83 88 94 104
+    TOKEN_RIGHT_PAREN <intType> (296) 11 37 65 66 67 79 83 88 94 104
+    TOKEN_LEFT_BRAK <intType> (297) 46 116 119
+    TOKEN_RIGHT_BRAK <intType> (298) 46 116 119
+    TOKEN_COMMA <intType> (299) 20 41
+    TOKEN_DOT <intType> (300) 4 5 25 26 28 29 30 32 33 34
+    ERROR <intType> (301)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (47)
+        on left: 0
+    FuncName <strType> (48)
+        on left: 15 16
+        on right: 11 37
+    Start <intType> (49)
+        on left: 1 2 3
+        on right: 0 2 3
+    Global (50)
+        on left: 4 5
+        on right: 3
+    GlobalAssignmentDeclaration (51)
+        on left: 6
+        on right: 4
+    Value <intType> (52)
+        on left: 7 8
+        on right: 6
+    Function (53)
+        on left: 11
+        on right: 2
+    $@1 (54)
+        on left: 9
+        on right: 11
+    $@2 (55)
+        on left: 10
+        on right: 11
+    Type <intType> (56)
+        on left: 12 13 14
+        on right: 6 11 115 116 117
+    FuncParamsList (57)
+        on left: 17 18
+        on right: 11
+    FunctionParams (58)
+        on left: 19 20
+        on right: 18 20
+    Block (59)
+        on left: 22
+        on right: 31 79 83 85 88
+    $@3 (60)
+        on left: 21
+        on right: 22
+    Statements (61)
+        on left: 23 24
+        on right: 11 22 24 94 110 112
+    Statement (62)
+        on left: 25 26 27 28 29 30 31 32 33 34
+        on right: 24
+    ReturnStatement (63)
+        on left: 35 36
+        on right: 30
+    FunctionCall <expNode> (64)
+        on left: 37
+        on right: 26 68
+    FunctionCallList (65)
+        on left: 38 39
+        on right: 37
+    FunctionCallInputs (66)
+        on left: 40 41
+        on right: 39 41
+    FunctionCallInput <expNode> (67)
+        on left: 42
+        on right: 40 41
+    Exp <expNode> (68)
+        on left: 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68
+        on right: 35 42 46 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 79 83 88 99 104 117 118 119
+    Conditional (69)
+        on left: 70 72 74 75
+        on right: 27
+    $@4 (70)
+        on left: 69
+        on right: 70
+    $@5 (71)
+        on left: 71
+        on right: 72
+    $@6 (72)
+        on left: 73
+        on right: 74
+    ConditionalIf (73)
+        on left: 79
+        on right: 70
+    $@7 (74)
+        on left: 76
+        on right: 79
+    $@8 (75)
+        on left: 77
+        on right: 79
+    $@9 (76)
+        on left: 78
+        on right: 79
+    ElseIfs (77)
+        on left: 80 83
+        on right: 79 83
+    $@10 (78)
+        on left: 81
+        on right: 83
+    $@11 (79)
+        on left: 82
+        on right: 83
+    Else (80)
+        on left: 84 85
+        on right: 79
+    ConditionalWhile (81)
+        on left: 88
+        on right: 72
+    $@12 (82)
+        on left: 86
+        on right: 88
+    $@13 (83)
+        on left: 87
+        on right: 88
+    ConditionalFor (84)
+        on left: 94
+        on right: 74
+    $@14 (85)
+        on left: 89
+        on right: 94
+    $@15 (86)
+        on left: 90
+        on right: 94
+    $@16 (87)
+        on left: 91
+        on right: 94
+    $@17 (88)
+        on left: 92
+        on right: 94
+    $@18 (89)
+        on left: 93
+        on right: 94
+    ForDeclaration (90)
+        on left: 95 96 97
+        on right: 94
+    ForCondition <expNode> (91)
+        on left: 98 99
+        on right: 94
+    ForStep (92)
+        on left: 100 101
+        on right: 94
+    ConditionalSwitch (93)
+        on left: 104
+        on right: 75
+    $@19 (94)
+        on left: 102
+        on right: 104
+    $@20 (95)
+        on left: 103
+        on right: 104
+    SwitchCases (96)
+        on left: 106
+        on right: 104
+    $@21 (97)
+        on left: 105
+        on right: 106
+    NormalCases (98)
+        on left: 107 110
+        on right: 106 110
+    $@22 (99)
+        on left: 108
+        on right: 110
+    $@23 (100)
+        on left: 109
+        on right: 110
+    DefaultCase (101)
+        on left: 111 112
+        on right: 106
+    CaseBREAK (102)
+        on left: 113 114
+        on right: 110 112
+    Declaration <strType> (103)
+        on left: 115 116
+        on right: 5 19 20 28
+    AssignmentDeclaration (104)
+        on left: 117
+        on right: 29 96
+    Assignment (105)
+        on left: 118 119
+        on right: 34 97 101
+
+
+State 0
+
+    0 $accept: . Start $end
+
+    $default  reduce using rule 1 (Start)
+
+    Start  go to state 1
+
+
+State 1
+
+    0 $accept: Start . $end
+    2 Start: Start . Function
+    3      | Start . Global
+
+    $end        shift, and go to state 2
+    TOKEN_INT   shift, and go to state 3
+    TOKEN_CHAR  shift, and go to state 4
+    TOKEN_VOID  shift, and go to state 5
+
+    Global                       go to state 6
+    GlobalAssignmentDeclaration  go to state 7
+    Function                     go to state 8
+    Type                         go to state 9
+    Declaration                  go to state 10
+
+
+State 2
+
+    0 $accept: Start $end .
+
+    $default  accept
+
+
+State 3
+
+   12 Type: TOKEN_INT .
+
+    $default  reduce using rule 12 (Type)
+
+
+State 4
+
+   13 Type: TOKEN_CHAR .
+
+    $default  reduce using rule 13 (Type)
+
+
+State 5
+
+   14 Type: TOKEN_VOID .
+
+    $default  reduce using rule 14 (Type)
+
+
+State 6
+
+    3 Start: Start Global .
+
+    $default  reduce using rule 3 (Start)
+
+
+State 7
+
+    4 Global: GlobalAssignmentDeclaration . TOKEN_DOT
+
+    TOKEN_DOT  shift, and go to state 11
+
+
+State 8
+
+    2 Start: Start Function .
+
+    $default  reduce using rule 2 (Start)
+
+
+State 9
+
+    6 GlobalAssignmentDeclaration: Type . TOKEN_IDENTIFIER TOKEN_ASSIGN Value
+   11 Function: Type . FuncName $@1 TOKEN_LEFT_PAREN FuncParamsList TOKEN_RIGHT_PAREN $@2 TOKEN_LESS Statements TOKEN_MORE
+  115 Declaration: Type . TOKEN_IDENTIFIER
+  116            | Type . TOKEN_IDENTIFIER TOKEN_LEFT_BRAK TOKEN_INT_CONST TOKEN_RIGHT_BRAK
+
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 13
+
+    FuncName  go to state 14
+
+
+State 10
+
+    5 Global: Declaration . TOKEN_DOT
+
+    TOKEN_DOT  shift, and go to state 15
+
+
+State 11
+
+    4 Global: GlobalAssignmentDeclaration TOKEN_DOT .
+
+    $default  reduce using rule 4 (Global)
+
+
+State 12
+
+   16 FuncName: TOKEN_MAIN .
+
+    $default  reduce using rule 16 (FuncName)
+
+
+State 13
+
+    6 GlobalAssignmentDeclaration: Type TOKEN_IDENTIFIER . TOKEN_ASSIGN Value
+   15 FuncName: TOKEN_IDENTIFIER .
+  115 Declaration: Type TOKEN_IDENTIFIER .
+  116            | Type TOKEN_IDENTIFIER . TOKEN_LEFT_BRAK TOKEN_INT_CONST TOKEN_RIGHT_BRAK
+
+    TOKEN_ASSIGN     shift, and go to state 16
+    TOKEN_LEFT_BRAK  shift, and go to state 17
+
+    TOKEN_DOT  reduce using rule 115 (Declaration)
+    $default   reduce using rule 15 (FuncName)
+
+
+State 14
+
+   11 Function: Type FuncName . $@1 TOKEN_LEFT_PAREN FuncParamsList TOKEN_RIGHT_PAREN $@2 TOKEN_LESS Statements TOKEN_MORE
+
+    $default  reduce using rule 9 ($@1)
+
+    $@1  go to state 18
+
+
+State 15
+
+    5 Global: Declaration TOKEN_DOT .
+
+    $default  reduce using rule 5 (Global)
+
+
+State 16
+
+    6 GlobalAssignmentDeclaration: Type TOKEN_IDENTIFIER TOKEN_ASSIGN . Value
+
+    TOKEN_CHAR_CONST  shift, and go to state 19
+    TOKEN_INT_CONST   shift, and go to state 20
+
+    Value  go to state 21
+
+
+State 17
+
+  116 Declaration: Type TOKEN_IDENTIFIER TOKEN_LEFT_BRAK . TOKEN_INT_CONST TOKEN_RIGHT_BRAK
+
+    TOKEN_INT_CONST  shift, and go to state 22
+
+
+State 18
+
+   11 Function: Type FuncName $@1 . TOKEN_LEFT_PAREN FuncParamsList TOKEN_RIGHT_PAREN $@2 TOKEN_LESS Statements TOKEN_MORE
+
+    TOKEN_LEFT_PAREN  shift, and go to state 23
+
+
+State 19
+
+    8 Value: TOKEN_CHAR_CONST .
+
+    $default  reduce using rule 8 (Value)
+
+
+State 20
+
+    7 Value: TOKEN_INT_CONST .
+
+    $default  reduce using rule 7 (Value)
+
+
+State 21
+
+    6 GlobalAssignmentDeclaration: Type TOKEN_IDENTIFIER TOKEN_ASSIGN Value .
+
+    $default  reduce using rule 6 (GlobalAssignmentDeclaration)
+
+
+State 22
+
+  116 Declaration: Type TOKEN_IDENTIFIER TOKEN_LEFT_BRAK TOKEN_INT_CONST . TOKEN_RIGHT_BRAK
+
+    TOKEN_RIGHT_BRAK  shift, and go to state 24
+
+
+State 23
+
+   11 Function: Type FuncName $@1 TOKEN_LEFT_PAREN . FuncParamsList TOKEN_RIGHT_PAREN $@2 TOKEN_LESS Statements TOKEN_MORE
+
+    TOKEN_INT   shift, and go to state 3
+    TOKEN_CHAR  shift, and go to state 4
+    TOKEN_VOID  shift, and go to state 5
+
+    $default  reduce using rule 17 (FuncParamsList)
+
+    Type            go to state 25
+    FuncParamsList  go to state 26
+    FunctionParams  go to state 27
+    Declaration     go to state 28
+
+
+State 24
+
+  116 Declaration: Type TOKEN_IDENTIFIER TOKEN_LEFT_BRAK TOKEN_INT_CONST TOKEN_RIGHT_BRAK .
+
+    $default  reduce using rule 116 (Declaration)
+
+
+State 25
+
+  115 Declaration: Type . TOKEN_IDENTIFIER
+  116            | Type . TOKEN_IDENTIFIER TOKEN_LEFT_BRAK TOKEN_INT_CONST TOKEN_RIGHT_BRAK
+
+    TOKEN_IDENTIFIER  shift, and go to state 29
+
+
+State 26
+
+   11 Function: Type FuncName $@1 TOKEN_LEFT_PAREN FuncParamsList . TOKEN_RIGHT_PAREN $@2 TOKEN_LESS Statements TOKEN_MORE
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 30
+
+
+State 27
+
+   18 FuncParamsList: FunctionParams .
+
+    $default  reduce using rule 18 (FuncParamsList)
+
+
+State 28
+
+   19 FunctionParams: Declaration .
+   20               | Declaration . TOKEN_COMMA FunctionParams
+
+    TOKEN_COMMA  shift, and go to state 31
+
+    $default  reduce using rule 19 (FunctionParams)
+
+
+State 29
+
+  115 Declaration: Type TOKEN_IDENTIFIER .
+  116            | Type TOKEN_IDENTIFIER . TOKEN_LEFT_BRAK TOKEN_INT_CONST TOKEN_RIGHT_BRAK
+
+    TOKEN_LEFT_BRAK  shift, and go to state 17
+
+    $default  reduce using rule 115 (Declaration)
+
+
+State 30
+
+   11 Function: Type FuncName $@1 TOKEN_LEFT_PAREN FuncParamsList TOKEN_RIGHT_PAREN . $@2 TOKEN_LESS Statements TOKEN_MORE
+
+    $default  reduce using rule 10 ($@2)
+
+    $@2  go to state 32
+
+
+State 31
+
+   20 FunctionParams: Declaration TOKEN_COMMA . FunctionParams
+
+    TOKEN_INT   shift, and go to state 3
+    TOKEN_CHAR  shift, and go to state 4
+    TOKEN_VOID  shift, and go to state 5
+
+    Type            go to state 25
+    FunctionParams  go to state 33
+    Declaration     go to state 28
+
+
+State 32
+
+   11 Function: Type FuncName $@1 TOKEN_LEFT_PAREN FuncParamsList TOKEN_RIGHT_PAREN $@2 . TOKEN_LESS Statements TOKEN_MORE
+
+    TOKEN_LESS  shift, and go to state 34
+
+
+State 33
+
+   20 FunctionParams: Declaration TOKEN_COMMA FunctionParams .
+
+    $default  reduce using rule 20 (FunctionParams)
+
+
+State 34
+
+   11 Function: Type FuncName $@1 TOKEN_LEFT_PAREN FuncParamsList TOKEN_RIGHT_PAREN $@2 TOKEN_LESS . Statements TOKEN_MORE
+
+    $default  reduce using rule 23 (Statements)
+
+    Statements  go to state 35
+
+
+State 35
+
+   11 Function: Type FuncName $@1 TOKEN_LEFT_PAREN FuncParamsList TOKEN_RIGHT_PAREN $@2 TOKEN_LESS Statements . TOKEN_MORE
+   24 Statements: Statements . Statement
+
+    TOKEN_INT         shift, and go to state 3
+    TOKEN_CHAR        shift, and go to state 4
+    TOKEN_CONTINUE    shift, and go to state 36
+    TOKEN_BREAK       shift, and go to state 37
+    TOKEN_RETURN      shift, and go to state 38
+    TOKEN_VOID        shift, and go to state 5
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_SWITCH      shift, and go to state 39
+    TOKEN_IDENTIFIER  shift, and go to state 40
+    TOKEN_LESS        shift, and go to state 41
+    TOKEN_MORE        shift, and go to state 42
+    TOKEN_DOT         shift, and go to state 43
+
+    TOKEN_WHILE  reduce using rule 71 ($@5)
+    TOKEN_FOR    reduce using rule 73 ($@6)
+    $default     reduce using rule 69 ($@4)
+
+    FuncName               go to state 44
+    Type                   go to state 45
+    Block                  go to state 46
+    Statement              go to state 47
+    ReturnStatement        go to state 48
+    FunctionCall           go to state 49
+    Conditional            go to state 50
+    $@4                    go to state 51
+    $@5                    go to state 52
+    $@6                    go to state 53
+    ConditionalSwitch      go to state 54
+    Declaration            go to state 55
+    AssignmentDeclaration  go to state 56
+    Assignment             go to state 57
+
+
+State 36
+
+   33 Statement: TOKEN_CONTINUE . TOKEN_DOT
+
+    TOKEN_DOT  shift, and go to state 58
+
+
+State 37
+
+   32 Statement: TOKEN_BREAK . TOKEN_DOT
+
+    TOKEN_DOT  shift, and go to state 59
+
+
+State 38
+
+   35 ReturnStatement: TOKEN_RETURN . Exp
+   36                | TOKEN_RETURN .
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    $default  reduce using rule 36 (ReturnStatement)
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 68
+
+
+State 39
+
+  104 ConditionalSwitch: TOKEN_SWITCH . $@19 TOKEN_LEFT_PAREN Exp $@20 TOKEN_RIGHT_PAREN TOKEN_LESS SwitchCases TOKEN_MORE
+
+    $default  reduce using rule 102 ($@19)
+
+    $@19  go to state 69
+
+
+State 40
+
+   15 FuncName: TOKEN_IDENTIFIER .
+  118 Assignment: TOKEN_IDENTIFIER . TOKEN_ASSIGN Exp
+  119           | TOKEN_IDENTIFIER . TOKEN_LEFT_BRAK Exp TOKEN_RIGHT_BRAK TOKEN_ASSIGN Exp
+
+    TOKEN_ASSIGN     shift, and go to state 70
+    TOKEN_LEFT_BRAK  shift, and go to state 71
+
+    $default  reduce using rule 15 (FuncName)
+
+
+State 41
+
+   22 Block: TOKEN_LESS . $@3 Statements TOKEN_MORE
+
+    $default  reduce using rule 21 ($@3)
+
+    $@3  go to state 72
+
+
+State 42
+
+   11 Function: Type FuncName $@1 TOKEN_LEFT_PAREN FuncParamsList TOKEN_RIGHT_PAREN $@2 TOKEN_LESS Statements TOKEN_MORE .
+
+    $default  reduce using rule 11 (Function)
+
+
+State 43
+
+   25 Statement: TOKEN_DOT .
+
+    $default  reduce using rule 25 (Statement)
+
+
+State 44
+
+   37 FunctionCall: FuncName . TOKEN_LEFT_PAREN FunctionCallList TOKEN_RIGHT_PAREN
+
+    TOKEN_LEFT_PAREN  shift, and go to state 73
+
+
+State 45
+
+  115 Declaration: Type . TOKEN_IDENTIFIER
+  116            | Type . TOKEN_IDENTIFIER TOKEN_LEFT_BRAK TOKEN_INT_CONST TOKEN_RIGHT_BRAK
+  117 AssignmentDeclaration: Type . TOKEN_IDENTIFIER TOKEN_ASSIGN Exp
+
+    TOKEN_IDENTIFIER  shift, and go to state 74
+
+
+State 46
+
+   31 Statement: Block .
+
+    $default  reduce using rule 31 (Statement)
+
+
+State 47
+
+   24 Statements: Statements Statement .
+
+    $default  reduce using rule 24 (Statements)
+
+
+State 48
+
+   30 Statement: ReturnStatement . TOKEN_DOT
+
+    TOKEN_DOT  shift, and go to state 75
+
+
+State 49
+
+   26 Statement: FunctionCall . TOKEN_DOT
+
+    TOKEN_DOT  shift, and go to state 76
+
+
+State 50
+
+   27 Statement: Conditional .
+
+    $default  reduce using rule 27 (Statement)
+
+
+State 51
+
+   70 Conditional: $@4 . ConditionalIf
+
+    TOKEN_IF  shift, and go to state 77
+
+    ConditionalIf  go to state 78
+
+
+State 52
+
+   72 Conditional: $@5 . ConditionalWhile
+
+    TOKEN_WHILE  shift, and go to state 79
+
+    ConditionalWhile  go to state 80
+
+
+State 53
+
+   74 Conditional: $@6 . ConditionalFor
+
+    TOKEN_FOR  shift, and go to state 81
+
+    ConditionalFor  go to state 82
+
+
+State 54
+
+   75 Conditional: ConditionalSwitch .
+
+    $default  reduce using rule 75 (Conditional)
+
+
+State 55
+
+   28 Statement: Declaration . TOKEN_DOT
+
+    TOKEN_DOT  shift, and go to state 83
+
+
+State 56
+
+   29 Statement: AssignmentDeclaration . TOKEN_DOT
+
+    TOKEN_DOT  shift, and go to state 84
+
+
+State 57
+
+   34 Statement: Assignment . TOKEN_DOT
+
+    TOKEN_DOT  shift, and go to state 85
+
+
+State 58
+
+   33 Statement: TOKEN_CONTINUE TOKEN_DOT .
+
+    $default  reduce using rule 33 (Statement)
+
+
+State 59
+
+   32 Statement: TOKEN_BREAK TOKEN_DOT .
+
+    $default  reduce using rule 32 (Statement)
+
+
+State 60
+
+   44 Exp: TOKEN_CHAR_CONST .
+
+    $default  reduce using rule 44 (Exp)
+
+
+State 61
+
+   15 FuncName: TOKEN_IDENTIFIER .
+   45 Exp: TOKEN_IDENTIFIER .
+   46    | TOKEN_IDENTIFIER . TOKEN_LEFT_BRAK Exp TOKEN_RIGHT_BRAK
+
+    TOKEN_LEFT_BRAK  shift, and go to state 86
+
+    TOKEN_LEFT_PAREN  reduce using rule 15 (FuncName)
+    $default          reduce using rule 45 (Exp)
+
+
+State 62
+
+   43 Exp: TOKEN_INT_CONST .
+
+    $default  reduce using rule 43 (Exp)
+
+
+State 63
+
+   64 Exp: TOKEN_NOT . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 87
+
+
+State 64
+
+   47 Exp: TOKEN_PLUS . TOKEN_INT_CONST
+   67    | TOKEN_PLUS . TOKEN_LEFT_PAREN Exp TOKEN_RIGHT_PAREN
+
+    TOKEN_INT_CONST   shift, and go to state 88
+    TOKEN_LEFT_PAREN  shift, and go to state 89
+
+
+State 65
+
+   48 Exp: TOKEN_MINUS . TOKEN_INT_CONST
+   66    | TOKEN_MINUS . TOKEN_LEFT_PAREN Exp TOKEN_RIGHT_PAREN
+
+    TOKEN_INT_CONST   shift, and go to state 90
+    TOKEN_LEFT_PAREN  shift, and go to state 91
+
+
+State 66
+
+   65 Exp: TOKEN_LEFT_PAREN . Exp TOKEN_RIGHT_PAREN
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 92
+
+
+State 67
+
+   68 Exp: FunctionCall .
+
+    $default  reduce using rule 68 (Exp)
+
+
+State 68
+
+   35 ReturnStatement: TOKEN_RETURN Exp .
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_OR          shift, and go to state 101
+    TOKEN_AND         shift, and go to state 102
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 35 (ReturnStatement)
+
+
+State 69
+
+  104 ConditionalSwitch: TOKEN_SWITCH $@19 . TOKEN_LEFT_PAREN Exp $@20 TOKEN_RIGHT_PAREN TOKEN_LESS SwitchCases TOKEN_MORE
+
+    TOKEN_LEFT_PAREN  shift, and go to state 108
+
+
+State 70
+
+  118 Assignment: TOKEN_IDENTIFIER TOKEN_ASSIGN . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 109
+
+
+State 71
+
+  119 Assignment: TOKEN_IDENTIFIER TOKEN_LEFT_BRAK . Exp TOKEN_RIGHT_BRAK TOKEN_ASSIGN Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 110
+
+
+State 72
+
+   22 Block: TOKEN_LESS $@3 . Statements TOKEN_MORE
+
+    $default  reduce using rule 23 (Statements)
+
+    Statements  go to state 111
+
+
+State 73
+
+   37 FunctionCall: FuncName TOKEN_LEFT_PAREN . FunctionCallList TOKEN_RIGHT_PAREN
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    $default  reduce using rule 38 (FunctionCallList)
+
+    FuncName            go to state 44
+    FunctionCall        go to state 67
+    FunctionCallList    go to state 112
+    FunctionCallInputs  go to state 113
+    FunctionCallInput   go to state 114
+    Exp                 go to state 115
+
+
+State 74
+
+  115 Declaration: Type TOKEN_IDENTIFIER .
+  116            | Type TOKEN_IDENTIFIER . TOKEN_LEFT_BRAK TOKEN_INT_CONST TOKEN_RIGHT_BRAK
+  117 AssignmentDeclaration: Type TOKEN_IDENTIFIER . TOKEN_ASSIGN Exp
+
+    TOKEN_ASSIGN     shift, and go to state 116
+    TOKEN_LEFT_BRAK  shift, and go to state 17
+
+    $default  reduce using rule 115 (Declaration)
+
+
+State 75
+
+   30 Statement: ReturnStatement TOKEN_DOT .
+
+    $default  reduce using rule 30 (Statement)
+
+
+State 76
+
+   26 Statement: FunctionCall TOKEN_DOT .
+
+    $default  reduce using rule 26 (Statement)
+
+
+State 77
+
+   79 ConditionalIf: TOKEN_IF . TOKEN_LEFT_PAREN Exp $@7 TOKEN_RIGHT_PAREN Block $@8 $@9 ElseIfs Else
+
+    TOKEN_LEFT_PAREN  shift, and go to state 117
+
+
+State 78
+
+   70 Conditional: $@4 ConditionalIf .
+
+    $default  reduce using rule 70 (Conditional)
+
+
+State 79
+
+   88 ConditionalWhile: TOKEN_WHILE . TOKEN_LEFT_PAREN $@12 Exp $@13 TOKEN_RIGHT_PAREN Block
+
+    TOKEN_LEFT_PAREN  shift, and go to state 118
+
+
+State 80
+
+   72 Conditional: $@5 ConditionalWhile .
+
+    $default  reduce using rule 72 (Conditional)
+
+
+State 81
+
+   94 ConditionalFor: TOKEN_FOR . TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+    TOKEN_LEFT_PAREN  shift, and go to state 119
+
+
+State 82
+
+   74 Conditional: $@6 ConditionalFor .
+
+    $default  reduce using rule 74 (Conditional)
+
+
+State 83
+
+   28 Statement: Declaration TOKEN_DOT .
+
+    $default  reduce using rule 28 (Statement)
+
+
+State 84
+
+   29 Statement: AssignmentDeclaration TOKEN_DOT .
+
+    $default  reduce using rule 29 (Statement)
+
+
+State 85
+
+   34 Statement: Assignment TOKEN_DOT .
+
+    $default  reduce using rule 34 (Statement)
+
+
+State 86
+
+   46 Exp: TOKEN_IDENTIFIER TOKEN_LEFT_BRAK . Exp TOKEN_RIGHT_BRAK
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 120
+
+
+State 87
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+   64    | TOKEN_NOT Exp .
+
+    $default  reduce using rule 64 (Exp)
+
+
+State 88
+
+   47 Exp: TOKEN_PLUS TOKEN_INT_CONST .
+
+    $default  reduce using rule 47 (Exp)
+
+
+State 89
+
+   67 Exp: TOKEN_PLUS TOKEN_LEFT_PAREN . Exp TOKEN_RIGHT_PAREN
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 121
+
+
+State 90
+
+   48 Exp: TOKEN_MINUS TOKEN_INT_CONST .
+
+    $default  reduce using rule 48 (Exp)
+
+
+State 91
+
+   66 Exp: TOKEN_MINUS TOKEN_LEFT_PAREN . Exp TOKEN_RIGHT_PAREN
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 122
+
+
+State 92
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+   65    | TOKEN_LEFT_PAREN Exp . TOKEN_RIGHT_PAREN
+
+    TOKEN_LESS         shift, and go to state 93
+    TOKEN_MORE         shift, and go to state 94
+    TOKEN_LESS_EQU     shift, and go to state 95
+    TOKEN_MORE_EQU     shift, and go to state 96
+    TOKEN_EQUALS       shift, and go to state 97
+    TOKEN_NOT_EQUALS   shift, and go to state 98
+    TOKEN_BIT_OR       shift, and go to state 99
+    TOKEN_BIT_AND      shift, and go to state 100
+    TOKEN_OR           shift, and go to state 101
+    TOKEN_AND          shift, and go to state 102
+    TOKEN_XOR          shift, and go to state 103
+    TOKEN_PLUS         shift, and go to state 104
+    TOKEN_MINUS        shift, and go to state 105
+    TOKEN_MULTIPLY     shift, and go to state 106
+    TOKEN_DIV          shift, and go to state 107
+    TOKEN_RIGHT_PAREN  shift, and go to state 123
+
+
+State 93
+
+   53 Exp: Exp TOKEN_LESS . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 124
+
+
+State 94
+
+   55 Exp: Exp TOKEN_MORE . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 125
+
+
+State 95
+
+   54 Exp: Exp TOKEN_LESS_EQU . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 126
+
+
+State 96
+
+   56 Exp: Exp TOKEN_MORE_EQU . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 127
+
+
+State 97
+
+   57 Exp: Exp TOKEN_EQUALS . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 128
+
+
+State 98
+
+   58 Exp: Exp TOKEN_NOT_EQUALS . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 129
+
+
+State 99
+
+   62 Exp: Exp TOKEN_BIT_OR . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 130
+
+
+State 100
+
+   63 Exp: Exp TOKEN_BIT_AND . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 131
+
+
+State 101
+
+   59 Exp: Exp TOKEN_OR . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 132
+
+
+State 102
+
+   60 Exp: Exp TOKEN_AND . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 133
+
+
+State 103
+
+   61 Exp: Exp TOKEN_XOR . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 134
+
+
+State 104
+
+   49 Exp: Exp TOKEN_PLUS . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 135
+
+
+State 105
+
+   50 Exp: Exp TOKEN_MINUS . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 136
+
+
+State 106
+
+   51 Exp: Exp TOKEN_MULTIPLY . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 137
+
+
+State 107
+
+   52 Exp: Exp TOKEN_DIV . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 138
+
+
+State 108
+
+  104 ConditionalSwitch: TOKEN_SWITCH $@19 TOKEN_LEFT_PAREN . Exp $@20 TOKEN_RIGHT_PAREN TOKEN_LESS SwitchCases TOKEN_MORE
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 139
+
+
+State 109
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+  118 Assignment: TOKEN_IDENTIFIER TOKEN_ASSIGN Exp .
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_OR          shift, and go to state 101
+    TOKEN_AND         shift, and go to state 102
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 118 (Assignment)
+
+
+State 110
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+  119 Assignment: TOKEN_IDENTIFIER TOKEN_LEFT_BRAK Exp . TOKEN_RIGHT_BRAK TOKEN_ASSIGN Exp
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_OR          shift, and go to state 101
+    TOKEN_AND         shift, and go to state 102
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+    TOKEN_RIGHT_BRAK  shift, and go to state 140
+
+
+State 111
+
+   22 Block: TOKEN_LESS $@3 Statements . TOKEN_MORE
+   24 Statements: Statements . Statement
+
+    TOKEN_INT         shift, and go to state 3
+    TOKEN_CHAR        shift, and go to state 4
+    TOKEN_CONTINUE    shift, and go to state 36
+    TOKEN_BREAK       shift, and go to state 37
+    TOKEN_RETURN      shift, and go to state 38
+    TOKEN_VOID        shift, and go to state 5
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_SWITCH      shift, and go to state 39
+    TOKEN_IDENTIFIER  shift, and go to state 40
+    TOKEN_LESS        shift, and go to state 41
+    TOKEN_MORE        shift, and go to state 141
+    TOKEN_DOT         shift, and go to state 43
+
+    TOKEN_WHILE  reduce using rule 71 ($@5)
+    TOKEN_FOR    reduce using rule 73 ($@6)
+    $default     reduce using rule 69 ($@4)
+
+    FuncName               go to state 44
+    Type                   go to state 45
+    Block                  go to state 46
+    Statement              go to state 47
+    ReturnStatement        go to state 48
+    FunctionCall           go to state 49
+    Conditional            go to state 50
+    $@4                    go to state 51
+    $@5                    go to state 52
+    $@6                    go to state 53
+    ConditionalSwitch      go to state 54
+    Declaration            go to state 55
+    AssignmentDeclaration  go to state 56
+    Assignment             go to state 57
+
+
+State 112
+
+   37 FunctionCall: FuncName TOKEN_LEFT_PAREN FunctionCallList . TOKEN_RIGHT_PAREN
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 142
+
+
+State 113
+
+   39 FunctionCallList: FunctionCallInputs .
+
+    $default  reduce using rule 39 (FunctionCallList)
+
+
+State 114
+
+   40 FunctionCallInputs: FunctionCallInput .
+   41                   | FunctionCallInput . TOKEN_COMMA FunctionCallInputs
+
+    TOKEN_COMMA  shift, and go to state 143
+
+    $default  reduce using rule 40 (FunctionCallInputs)
+
+
+State 115
+
+   42 FunctionCallInput: Exp .
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_OR          shift, and go to state 101
+    TOKEN_AND         shift, and go to state 102
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 42 (FunctionCallInput)
+
+
+State 116
+
+  117 AssignmentDeclaration: Type TOKEN_IDENTIFIER TOKEN_ASSIGN . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 144
+
+
+State 117
+
+   79 ConditionalIf: TOKEN_IF TOKEN_LEFT_PAREN . Exp $@7 TOKEN_RIGHT_PAREN Block $@8 $@9 ElseIfs Else
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 145
+
+
+State 118
+
+   88 ConditionalWhile: TOKEN_WHILE TOKEN_LEFT_PAREN . $@12 Exp $@13 TOKEN_RIGHT_PAREN Block
+
+    $default  reduce using rule 86 ($@12)
+
+    $@12  go to state 146
+
+
+State 119
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN . ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+    TOKEN_INT         shift, and go to state 3
+    TOKEN_CHAR        shift, and go to state 4
+    TOKEN_VOID        shift, and go to state 5
+    TOKEN_IDENTIFIER  shift, and go to state 147
+
+    $default  reduce using rule 95 (ForDeclaration)
+
+    Type                   go to state 148
+    ForDeclaration         go to state 149
+    AssignmentDeclaration  go to state 150
+    Assignment             go to state 151
+
+
+State 120
+
+   46 Exp: TOKEN_IDENTIFIER TOKEN_LEFT_BRAK Exp . TOKEN_RIGHT_BRAK
+   49    | Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_OR          shift, and go to state 101
+    TOKEN_AND         shift, and go to state 102
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+    TOKEN_RIGHT_BRAK  shift, and go to state 152
+
+
+State 121
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+   67    | TOKEN_PLUS TOKEN_LEFT_PAREN Exp . TOKEN_RIGHT_PAREN
+
+    TOKEN_LESS         shift, and go to state 93
+    TOKEN_MORE         shift, and go to state 94
+    TOKEN_LESS_EQU     shift, and go to state 95
+    TOKEN_MORE_EQU     shift, and go to state 96
+    TOKEN_EQUALS       shift, and go to state 97
+    TOKEN_NOT_EQUALS   shift, and go to state 98
+    TOKEN_BIT_OR       shift, and go to state 99
+    TOKEN_BIT_AND      shift, and go to state 100
+    TOKEN_OR           shift, and go to state 101
+    TOKEN_AND          shift, and go to state 102
+    TOKEN_XOR          shift, and go to state 103
+    TOKEN_PLUS         shift, and go to state 104
+    TOKEN_MINUS        shift, and go to state 105
+    TOKEN_MULTIPLY     shift, and go to state 106
+    TOKEN_DIV          shift, and go to state 107
+    TOKEN_RIGHT_PAREN  shift, and go to state 153
+
+
+State 122
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+   66    | TOKEN_MINUS TOKEN_LEFT_PAREN Exp . TOKEN_RIGHT_PAREN
+
+    TOKEN_LESS         shift, and go to state 93
+    TOKEN_MORE         shift, and go to state 94
+    TOKEN_LESS_EQU     shift, and go to state 95
+    TOKEN_MORE_EQU     shift, and go to state 96
+    TOKEN_EQUALS       shift, and go to state 97
+    TOKEN_NOT_EQUALS   shift, and go to state 98
+    TOKEN_BIT_OR       shift, and go to state 99
+    TOKEN_BIT_AND      shift, and go to state 100
+    TOKEN_OR           shift, and go to state 101
+    TOKEN_AND          shift, and go to state 102
+    TOKEN_XOR          shift, and go to state 103
+    TOKEN_PLUS         shift, and go to state 104
+    TOKEN_MINUS        shift, and go to state 105
+    TOKEN_MULTIPLY     shift, and go to state 106
+    TOKEN_DIV          shift, and go to state 107
+    TOKEN_RIGHT_PAREN  shift, and go to state 154
+
+
+State 123
+
+   65 Exp: TOKEN_LEFT_PAREN Exp TOKEN_RIGHT_PAREN .
+
+    $default  reduce using rule 65 (Exp)
+
+
+State 124
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   53    | Exp TOKEN_LESS Exp .
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_MORE      shift, and go to state 94
+    TOKEN_MORE_EQU  shift, and go to state 96
+    TOKEN_PLUS      shift, and go to state 104
+    TOKEN_MINUS     shift, and go to state 105
+    TOKEN_MULTIPLY  shift, and go to state 106
+    TOKEN_DIV       shift, and go to state 107
+
+    TOKEN_LESS      error (nonassociative)
+    TOKEN_LESS_EQU  error (nonassociative)
+
+    $default  reduce using rule 53 (Exp)
+
+
+State 125
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   55    | Exp TOKEN_MORE Exp .
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_PLUS      shift, and go to state 104
+    TOKEN_MINUS     shift, and go to state 105
+    TOKEN_MULTIPLY  shift, and go to state 106
+    TOKEN_DIV       shift, and go to state 107
+
+    TOKEN_MORE      error (nonassociative)
+    TOKEN_MORE_EQU  error (nonassociative)
+
+    $default  reduce using rule 55 (Exp)
+
+
+State 126
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   54    | Exp TOKEN_LESS_EQU Exp .
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_MORE      shift, and go to state 94
+    TOKEN_MORE_EQU  shift, and go to state 96
+    TOKEN_PLUS      shift, and go to state 104
+    TOKEN_MINUS     shift, and go to state 105
+    TOKEN_MULTIPLY  shift, and go to state 106
+    TOKEN_DIV       shift, and go to state 107
+
+    TOKEN_LESS      error (nonassociative)
+    TOKEN_LESS_EQU  error (nonassociative)
+
+    $default  reduce using rule 54 (Exp)
+
+
+State 127
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   56    | Exp TOKEN_MORE_EQU Exp .
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_PLUS      shift, and go to state 104
+    TOKEN_MINUS     shift, and go to state 105
+    TOKEN_MULTIPLY  shift, and go to state 106
+    TOKEN_DIV       shift, and go to state 107
+
+    TOKEN_MORE      error (nonassociative)
+    TOKEN_MORE_EQU  error (nonassociative)
+
+    $default  reduce using rule 56 (Exp)
+
+
+State 128
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   57    | Exp TOKEN_EQUALS Exp .
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_LESS      shift, and go to state 93
+    TOKEN_MORE      shift, and go to state 94
+    TOKEN_LESS_EQU  shift, and go to state 95
+    TOKEN_MORE_EQU  shift, and go to state 96
+    TOKEN_PLUS      shift, and go to state 104
+    TOKEN_MINUS     shift, and go to state 105
+    TOKEN_MULTIPLY  shift, and go to state 106
+    TOKEN_DIV       shift, and go to state 107
+
+    $default  reduce using rule 57 (Exp)
+
+
+State 129
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   58    | Exp TOKEN_NOT_EQUALS Exp .
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_LESS      shift, and go to state 93
+    TOKEN_MORE      shift, and go to state 94
+    TOKEN_LESS_EQU  shift, and go to state 95
+    TOKEN_MORE_EQU  shift, and go to state 96
+    TOKEN_PLUS      shift, and go to state 104
+    TOKEN_MINUS     shift, and go to state 105
+    TOKEN_MULTIPLY  shift, and go to state 106
+    TOKEN_DIV       shift, and go to state 107
+
+    $default  reduce using rule 58 (Exp)
+
+
+State 130
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   62    | Exp TOKEN_BIT_OR Exp .
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 62 (Exp)
+
+
+State 131
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+   63    | Exp TOKEN_BIT_AND Exp .
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 63 (Exp)
+
+
+State 132
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   59    | Exp TOKEN_OR Exp .
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 59 (Exp)
+
+
+State 133
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   60    | Exp TOKEN_AND Exp .
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 60 (Exp)
+
+
+State 134
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   61    | Exp TOKEN_XOR Exp .
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 61 (Exp)
+
+
+State 135
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   49    | Exp TOKEN_PLUS Exp .
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_MULTIPLY  shift, and go to state 106
+    TOKEN_DIV       shift, and go to state 107
+
+    $default  reduce using rule 49 (Exp)
+
+
+State 136
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   50    | Exp TOKEN_MINUS Exp .
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    TOKEN_MULTIPLY  shift, and go to state 106
+    TOKEN_DIV       shift, and go to state 107
+
+    $default  reduce using rule 50 (Exp)
+
+
+State 137
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   51    | Exp TOKEN_MULTIPLY Exp .
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    $default  reduce using rule 51 (Exp)
+
+
+State 138
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   52    | Exp TOKEN_DIV Exp .
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+
+    $default  reduce using rule 52 (Exp)
+
+
+State 139
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+  104 ConditionalSwitch: TOKEN_SWITCH $@19 TOKEN_LEFT_PAREN Exp . $@20 TOKEN_RIGHT_PAREN TOKEN_LESS SwitchCases TOKEN_MORE
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_OR          shift, and go to state 101
+    TOKEN_AND         shift, and go to state 102
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 103 ($@20)
+
+    $@20  go to state 155
+
+
+State 140
+
+  119 Assignment: TOKEN_IDENTIFIER TOKEN_LEFT_BRAK Exp TOKEN_RIGHT_BRAK . TOKEN_ASSIGN Exp
+
+    TOKEN_ASSIGN  shift, and go to state 156
+
+
+State 141
+
+   22 Block: TOKEN_LESS $@3 Statements TOKEN_MORE .
+
+    $default  reduce using rule 22 (Block)
+
+
+State 142
+
+   37 FunctionCall: FuncName TOKEN_LEFT_PAREN FunctionCallList TOKEN_RIGHT_PAREN .
+
+    $default  reduce using rule 37 (FunctionCall)
+
+
+State 143
+
+   41 FunctionCallInputs: FunctionCallInput TOKEN_COMMA . FunctionCallInputs
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName            go to state 44
+    FunctionCall        go to state 67
+    FunctionCallInputs  go to state 157
+    FunctionCallInput   go to state 114
+    Exp                 go to state 115
+
+
+State 144
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+  117 AssignmentDeclaration: Type TOKEN_IDENTIFIER TOKEN_ASSIGN Exp .
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_OR          shift, and go to state 101
+    TOKEN_AND         shift, and go to state 102
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 117 (AssignmentDeclaration)
+
+
+State 145
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+   79 ConditionalIf: TOKEN_IF TOKEN_LEFT_PAREN Exp . $@7 TOKEN_RIGHT_PAREN Block $@8 $@9 ElseIfs Else
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_OR          shift, and go to state 101
+    TOKEN_AND         shift, and go to state 102
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 76 ($@7)
+
+    $@7  go to state 158
+
+
+State 146
+
+   88 ConditionalWhile: TOKEN_WHILE TOKEN_LEFT_PAREN $@12 . Exp $@13 TOKEN_RIGHT_PAREN Block
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 159
+
+
+State 147
+
+  118 Assignment: TOKEN_IDENTIFIER . TOKEN_ASSIGN Exp
+  119           | TOKEN_IDENTIFIER . TOKEN_LEFT_BRAK Exp TOKEN_RIGHT_BRAK TOKEN_ASSIGN Exp
+
+    TOKEN_ASSIGN     shift, and go to state 70
+    TOKEN_LEFT_BRAK  shift, and go to state 71
+
+
+State 148
+
+  117 AssignmentDeclaration: Type . TOKEN_IDENTIFIER TOKEN_ASSIGN Exp
+
+    TOKEN_IDENTIFIER  shift, and go to state 160
+
+
+State 149
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration . TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+    TOKEN_SHARP  shift, and go to state 161
+
+
+State 150
+
+   96 ForDeclaration: AssignmentDeclaration .
+
+    $default  reduce using rule 96 (ForDeclaration)
+
+
+State 151
+
+   97 ForDeclaration: Assignment .
+
+    $default  reduce using rule 97 (ForDeclaration)
+
+
+State 152
+
+   46 Exp: TOKEN_IDENTIFIER TOKEN_LEFT_BRAK Exp TOKEN_RIGHT_BRAK .
+
+    $default  reduce using rule 46 (Exp)
+
+
+State 153
+
+   67 Exp: TOKEN_PLUS TOKEN_LEFT_PAREN Exp TOKEN_RIGHT_PAREN .
+
+    $default  reduce using rule 67 (Exp)
+
+
+State 154
+
+   66 Exp: TOKEN_MINUS TOKEN_LEFT_PAREN Exp TOKEN_RIGHT_PAREN .
+
+    $default  reduce using rule 66 (Exp)
+
+
+State 155
+
+  104 ConditionalSwitch: TOKEN_SWITCH $@19 TOKEN_LEFT_PAREN Exp $@20 . TOKEN_RIGHT_PAREN TOKEN_LESS SwitchCases TOKEN_MORE
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 162
+
+
+State 156
+
+  119 Assignment: TOKEN_IDENTIFIER TOKEN_LEFT_BRAK Exp TOKEN_RIGHT_BRAK TOKEN_ASSIGN . Exp
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 163
+
+
+State 157
+
+   41 FunctionCallInputs: FunctionCallInput TOKEN_COMMA FunctionCallInputs .
+
+    $default  reduce using rule 41 (FunctionCallInputs)
+
+
+State 158
+
+   79 ConditionalIf: TOKEN_IF TOKEN_LEFT_PAREN Exp $@7 . TOKEN_RIGHT_PAREN Block $@8 $@9 ElseIfs Else
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 164
+
+
+State 159
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+   88 ConditionalWhile: TOKEN_WHILE TOKEN_LEFT_PAREN $@12 Exp . $@13 TOKEN_RIGHT_PAREN Block
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_OR          shift, and go to state 101
+    TOKEN_AND         shift, and go to state 102
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 87 ($@13)
+
+    $@13  go to state 165
+
+
+State 160
+
+  117 AssignmentDeclaration: Type TOKEN_IDENTIFIER . TOKEN_ASSIGN Exp
+
+    TOKEN_ASSIGN  shift, and go to state 116
+
+
+State 161
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP . $@14 ForCondition $@15 TOKEN_SHARP $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+    $default  reduce using rule 89 ($@14)
+
+    $@14  go to state 166
+
+
+State 162
+
+  104 ConditionalSwitch: TOKEN_SWITCH $@19 TOKEN_LEFT_PAREN Exp $@20 TOKEN_RIGHT_PAREN . TOKEN_LESS SwitchCases TOKEN_MORE
+
+    TOKEN_LESS  shift, and go to state 167
+
+
+State 163
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+  119 Assignment: TOKEN_IDENTIFIER TOKEN_LEFT_BRAK Exp TOKEN_RIGHT_BRAK TOKEN_ASSIGN Exp .
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_OR          shift, and go to state 101
+    TOKEN_AND         shift, and go to state 102
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 119 (Assignment)
+
+
+State 164
+
+   79 ConditionalIf: TOKEN_IF TOKEN_LEFT_PAREN Exp $@7 TOKEN_RIGHT_PAREN . Block $@8 $@9 ElseIfs Else
+
+    TOKEN_LESS  shift, and go to state 41
+
+    Block  go to state 168
+
+
+State 165
+
+   88 ConditionalWhile: TOKEN_WHILE TOKEN_LEFT_PAREN $@12 Exp $@13 . TOKEN_RIGHT_PAREN Block
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 169
+
+
+State 166
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 . ForCondition $@15 TOKEN_SHARP $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    $default  reduce using rule 98 (ForCondition)
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 170
+    ForCondition  go to state 171
+
+
+State 167
+
+  104 ConditionalSwitch: TOKEN_SWITCH $@19 TOKEN_LEFT_PAREN Exp $@20 TOKEN_RIGHT_PAREN TOKEN_LESS . SwitchCases TOKEN_MORE
+
+    $default  reduce using rule 107 (NormalCases)
+
+    SwitchCases  go to state 172
+    NormalCases  go to state 173
+
+
+State 168
+
+   79 ConditionalIf: TOKEN_IF TOKEN_LEFT_PAREN Exp $@7 TOKEN_RIGHT_PAREN Block . $@8 $@9 ElseIfs Else
+
+    $default  reduce using rule 77 ($@8)
+
+    $@8  go to state 174
+
+
+State 169
+
+   88 ConditionalWhile: TOKEN_WHILE TOKEN_LEFT_PAREN $@12 Exp $@13 TOKEN_RIGHT_PAREN . Block
+
+    TOKEN_LESS  shift, and go to state 41
+
+    Block  go to state 175
+
+
+State 170
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+   99 ForCondition: Exp .
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_OR          shift, and go to state 101
+    TOKEN_AND         shift, and go to state 102
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 99 (ForCondition)
+
+
+State 171
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition . $@15 TOKEN_SHARP $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+    $default  reduce using rule 90 ($@15)
+
+    $@15  go to state 176
+
+
+State 172
+
+  104 ConditionalSwitch: TOKEN_SWITCH $@19 TOKEN_LEFT_PAREN Exp $@20 TOKEN_RIGHT_PAREN TOKEN_LESS SwitchCases . TOKEN_MORE
+
+    TOKEN_MORE  shift, and go to state 177
+
+
+State 173
+
+  106 SwitchCases: NormalCases . $@21 DefaultCase
+  110 NormalCases: NormalCases . TOKEN_CASE TOKEN_INT_CONST $@22 TOKEN_COLON $@23 Statements CaseBREAK
+
+    TOKEN_CASE  shift, and go to state 178
+
+    $default  reduce using rule 105 ($@21)
+
+    $@21  go to state 179
+
+
+State 174
+
+   79 ConditionalIf: TOKEN_IF TOKEN_LEFT_PAREN Exp $@7 TOKEN_RIGHT_PAREN Block $@8 . $@9 ElseIfs Else
+
+    $default  reduce using rule 78 ($@9)
+
+    $@9  go to state 180
+
+
+State 175
+
+   88 ConditionalWhile: TOKEN_WHILE TOKEN_LEFT_PAREN $@12 Exp $@13 TOKEN_RIGHT_PAREN Block .
+
+    $default  reduce using rule 88 (ConditionalWhile)
+
+
+State 176
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 . TOKEN_SHARP $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+    TOKEN_SHARP  shift, and go to state 181
+
+
+State 177
+
+  104 ConditionalSwitch: TOKEN_SWITCH $@19 TOKEN_LEFT_PAREN Exp $@20 TOKEN_RIGHT_PAREN TOKEN_LESS SwitchCases TOKEN_MORE .
+
+    $default  reduce using rule 104 (ConditionalSwitch)
+
+
+State 178
+
+  110 NormalCases: NormalCases TOKEN_CASE . TOKEN_INT_CONST $@22 TOKEN_COLON $@23 Statements CaseBREAK
+
+    TOKEN_INT_CONST  shift, and go to state 182
+
+
+State 179
+
+  106 SwitchCases: NormalCases $@21 . DefaultCase
+
+    TOKEN_DEFAULT  shift, and go to state 183
+
+    $default  reduce using rule 111 (DefaultCase)
+
+    DefaultCase  go to state 184
+
+
+State 180
+
+   79 ConditionalIf: TOKEN_IF TOKEN_LEFT_PAREN Exp $@7 TOKEN_RIGHT_PAREN Block $@8 $@9 . ElseIfs Else
+
+    TOKEN_ELSE_IF  shift, and go to state 185
+
+    $default  reduce using rule 80 (ElseIfs)
+
+    ElseIfs  go to state 186
+
+
+State 181
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP . $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+    $default  reduce using rule 91 ($@16)
+
+    $@16  go to state 187
+
+
+State 182
+
+  110 NormalCases: NormalCases TOKEN_CASE TOKEN_INT_CONST . $@22 TOKEN_COLON $@23 Statements CaseBREAK
+
+    $default  reduce using rule 108 ($@22)
+
+    $@22  go to state 188
+
+
+State 183
+
+  112 DefaultCase: TOKEN_DEFAULT . TOKEN_COLON Statements CaseBREAK
+
+    TOKEN_COLON  shift, and go to state 189
+
+
+State 184
+
+  106 SwitchCases: NormalCases $@21 DefaultCase .
+
+    $default  reduce using rule 106 (SwitchCases)
+
+
+State 185
+
+   83 ElseIfs: TOKEN_ELSE_IF . TOKEN_LEFT_PAREN Exp $@10 TOKEN_RIGHT_PAREN Block $@11 ElseIfs
+
+    TOKEN_LEFT_PAREN  shift, and go to state 190
+
+
+State 186
+
+   79 ConditionalIf: TOKEN_IF TOKEN_LEFT_PAREN Exp $@7 TOKEN_RIGHT_PAREN Block $@8 $@9 ElseIfs . Else
+
+    TOKEN_ELSE  shift, and go to state 191
+
+    $default  reduce using rule 84 (Else)
+
+    Else  go to state 192
+
+
+State 187
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP $@16 . ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+    TOKEN_IDENTIFIER  shift, and go to state 147
+
+    $default  reduce using rule 100 (ForStep)
+
+    ForStep     go to state 193
+    Assignment  go to state 194
+
+
+State 188
+
+  110 NormalCases: NormalCases TOKEN_CASE TOKEN_INT_CONST $@22 . TOKEN_COLON $@23 Statements CaseBREAK
+
+    TOKEN_COLON  shift, and go to state 195
+
+
+State 189
+
+  112 DefaultCase: TOKEN_DEFAULT TOKEN_COLON . Statements CaseBREAK
+
+    $default  reduce using rule 23 (Statements)
+
+    Statements  go to state 196
+
+
+State 190
+
+   83 ElseIfs: TOKEN_ELSE_IF TOKEN_LEFT_PAREN . Exp $@10 TOKEN_RIGHT_PAREN Block $@11 ElseIfs
+
+    TOKEN_CHAR_CONST  shift, and go to state 60
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_IDENTIFIER  shift, and go to state 61
+    TOKEN_INT_CONST   shift, and go to state 62
+    TOKEN_NOT         shift, and go to state 63
+    TOKEN_PLUS        shift, and go to state 64
+    TOKEN_MINUS       shift, and go to state 65
+    TOKEN_LEFT_PAREN  shift, and go to state 66
+
+    FuncName      go to state 44
+    FunctionCall  go to state 67
+    Exp           go to state 197
+
+
+State 191
+
+   85 Else: TOKEN_ELSE . Block
+
+    TOKEN_LESS  shift, and go to state 41
+
+    Block  go to state 198
+
+
+State 192
+
+   79 ConditionalIf: TOKEN_IF TOKEN_LEFT_PAREN Exp $@7 TOKEN_RIGHT_PAREN Block $@8 $@9 ElseIfs Else .
+
+    $default  reduce using rule 79 (ConditionalIf)
+
+
+State 193
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP $@16 ForStep . $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+    $default  reduce using rule 92 ($@17)
+
+    $@17  go to state 199
+
+
+State 194
+
+  101 ForStep: Assignment .
+
+    $default  reduce using rule 101 (ForStep)
+
+
+State 195
+
+  110 NormalCases: NormalCases TOKEN_CASE TOKEN_INT_CONST $@22 TOKEN_COLON . $@23 Statements CaseBREAK
+
+    $default  reduce using rule 109 ($@23)
+
+    $@23  go to state 200
+
+
+State 196
+
+   24 Statements: Statements . Statement
+  112 DefaultCase: TOKEN_DEFAULT TOKEN_COLON Statements . CaseBREAK
+
+    TOKEN_INT         shift, and go to state 3
+    TOKEN_CHAR        shift, and go to state 4
+    TOKEN_CONTINUE    shift, and go to state 36
+    TOKEN_BREAK       shift, and go to state 201
+    TOKEN_RETURN      shift, and go to state 38
+    TOKEN_VOID        shift, and go to state 5
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_SWITCH      shift, and go to state 39
+    TOKEN_IDENTIFIER  shift, and go to state 40
+    TOKEN_LESS        shift, and go to state 41
+    TOKEN_DOT         shift, and go to state 43
+
+    TOKEN_WHILE  reduce using rule 71 ($@5)
+    TOKEN_FOR    reduce using rule 73 ($@6)
+    TOKEN_MORE   reduce using rule 113 (CaseBREAK)
+    $default     reduce using rule 69 ($@4)
+
+    FuncName               go to state 44
+    Type                   go to state 45
+    Block                  go to state 46
+    Statement              go to state 47
+    ReturnStatement        go to state 48
+    FunctionCall           go to state 49
+    Conditional            go to state 50
+    $@4                    go to state 51
+    $@5                    go to state 52
+    $@6                    go to state 53
+    ConditionalSwitch      go to state 54
+    CaseBREAK              go to state 202
+    Declaration            go to state 55
+    AssignmentDeclaration  go to state 56
+    Assignment             go to state 57
+
+
+State 197
+
+   49 Exp: Exp . TOKEN_PLUS Exp
+   50    | Exp . TOKEN_MINUS Exp
+   51    | Exp . TOKEN_MULTIPLY Exp
+   52    | Exp . TOKEN_DIV Exp
+   53    | Exp . TOKEN_LESS Exp
+   54    | Exp . TOKEN_LESS_EQU Exp
+   55    | Exp . TOKEN_MORE Exp
+   56    | Exp . TOKEN_MORE_EQU Exp
+   57    | Exp . TOKEN_EQUALS Exp
+   58    | Exp . TOKEN_NOT_EQUALS Exp
+   59    | Exp . TOKEN_OR Exp
+   60    | Exp . TOKEN_AND Exp
+   61    | Exp . TOKEN_XOR Exp
+   62    | Exp . TOKEN_BIT_OR Exp
+   63    | Exp . TOKEN_BIT_AND Exp
+   83 ElseIfs: TOKEN_ELSE_IF TOKEN_LEFT_PAREN Exp . $@10 TOKEN_RIGHT_PAREN Block $@11 ElseIfs
+
+    TOKEN_LESS        shift, and go to state 93
+    TOKEN_MORE        shift, and go to state 94
+    TOKEN_LESS_EQU    shift, and go to state 95
+    TOKEN_MORE_EQU    shift, and go to state 96
+    TOKEN_EQUALS      shift, and go to state 97
+    TOKEN_NOT_EQUALS  shift, and go to state 98
+    TOKEN_BIT_OR      shift, and go to state 99
+    TOKEN_BIT_AND     shift, and go to state 100
+    TOKEN_OR          shift, and go to state 101
+    TOKEN_AND         shift, and go to state 102
+    TOKEN_XOR         shift, and go to state 103
+    TOKEN_PLUS        shift, and go to state 104
+    TOKEN_MINUS       shift, and go to state 105
+    TOKEN_MULTIPLY    shift, and go to state 106
+    TOKEN_DIV         shift, and go to state 107
+
+    $default  reduce using rule 81 ($@10)
+
+    $@10  go to state 203
+
+
+State 198
+
+   85 Else: TOKEN_ELSE Block .
+
+    $default  reduce using rule 85 (Else)
+
+
+State 199
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP $@16 ForStep $@17 . $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+    $default  reduce using rule 93 ($@18)
+
+    $@18  go to state 204
+
+
+State 200
+
+  110 NormalCases: NormalCases TOKEN_CASE TOKEN_INT_CONST $@22 TOKEN_COLON $@23 . Statements CaseBREAK
+
+    $default  reduce using rule 23 (Statements)
+
+    Statements  go to state 205
+
+
+State 201
+
+   32 Statement: TOKEN_BREAK . TOKEN_DOT
+  114 CaseBREAK: TOKEN_BREAK . TOKEN_SHARP
+
+    TOKEN_SHARP  shift, and go to state 206
+    TOKEN_DOT    shift, and go to state 59
+
+
+State 202
+
+  112 DefaultCase: TOKEN_DEFAULT TOKEN_COLON Statements CaseBREAK .
+
+    $default  reduce using rule 112 (DefaultCase)
+
+
+State 203
+
+   83 ElseIfs: TOKEN_ELSE_IF TOKEN_LEFT_PAREN Exp $@10 . TOKEN_RIGHT_PAREN Block $@11 ElseIfs
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 207
+
+
+State 204
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP $@16 ForStep $@17 $@18 . TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 208
+
+
+State 205
+
+   24 Statements: Statements . Statement
+  110 NormalCases: NormalCases TOKEN_CASE TOKEN_INT_CONST $@22 TOKEN_COLON $@23 Statements . CaseBREAK
+
+    TOKEN_INT         shift, and go to state 3
+    TOKEN_CHAR        shift, and go to state 4
+    TOKEN_CONTINUE    shift, and go to state 36
+    TOKEN_BREAK       shift, and go to state 201
+    TOKEN_RETURN      shift, and go to state 38
+    TOKEN_VOID        shift, and go to state 5
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_SWITCH      shift, and go to state 39
+    TOKEN_IDENTIFIER  shift, and go to state 40
+    TOKEN_LESS        shift, and go to state 41
+    TOKEN_DOT         shift, and go to state 43
+
+    TOKEN_IF     reduce using rule 69 ($@4)
+    TOKEN_WHILE  reduce using rule 71 ($@5)
+    TOKEN_FOR    reduce using rule 73 ($@6)
+    $default     reduce using rule 113 (CaseBREAK)
+
+    FuncName               go to state 44
+    Type                   go to state 45
+    Block                  go to state 46
+    Statement              go to state 47
+    ReturnStatement        go to state 48
+    FunctionCall           go to state 49
+    Conditional            go to state 50
+    $@4                    go to state 51
+    $@5                    go to state 52
+    $@6                    go to state 53
+    ConditionalSwitch      go to state 54
+    CaseBREAK              go to state 209
+    Declaration            go to state 55
+    AssignmentDeclaration  go to state 56
+    Assignment             go to state 57
+
+
+State 206
+
+  114 CaseBREAK: TOKEN_BREAK TOKEN_SHARP .
+
+    $default  reduce using rule 114 (CaseBREAK)
+
+
+State 207
+
+   83 ElseIfs: TOKEN_ELSE_IF TOKEN_LEFT_PAREN Exp $@10 TOKEN_RIGHT_PAREN . Block $@11 ElseIfs
+
+    TOKEN_LESS  shift, and go to state 41
+
+    Block  go to state 210
+
+
+State 208
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN . TOKEN_LESS Statements TOKEN_MORE
+
+    TOKEN_LESS  shift, and go to state 211
+
+
+State 209
+
+  110 NormalCases: NormalCases TOKEN_CASE TOKEN_INT_CONST $@22 TOKEN_COLON $@23 Statements CaseBREAK .
+
+    $default  reduce using rule 110 (NormalCases)
+
+
+State 210
+
+   83 ElseIfs: TOKEN_ELSE_IF TOKEN_LEFT_PAREN Exp $@10 TOKEN_RIGHT_PAREN Block . $@11 ElseIfs
+
+    $default  reduce using rule 82 ($@11)
+
+    $@11  go to state 212
+
+
+State 211
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS . Statements TOKEN_MORE
+
+    $default  reduce using rule 23 (Statements)
+
+    Statements  go to state 213
+
+
+State 212
+
+   83 ElseIfs: TOKEN_ELSE_IF TOKEN_LEFT_PAREN Exp $@10 TOKEN_RIGHT_PAREN Block $@11 . ElseIfs
+
+    TOKEN_ELSE_IF  shift, and go to state 185
+
+    $default  reduce using rule 80 (ElseIfs)
+
+    ElseIfs  go to state 214
+
+
+State 213
+
+   24 Statements: Statements . Statement
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements . TOKEN_MORE
+
+    TOKEN_INT         shift, and go to state 3
+    TOKEN_CHAR        shift, and go to state 4
+    TOKEN_CONTINUE    shift, and go to state 36
+    TOKEN_BREAK       shift, and go to state 37
+    TOKEN_RETURN      shift, and go to state 38
+    TOKEN_VOID        shift, and go to state 5
+    TOKEN_MAIN        shift, and go to state 12
+    TOKEN_SWITCH      shift, and go to state 39
+    TOKEN_IDENTIFIER  shift, and go to state 40
+    TOKEN_LESS        shift, and go to state 41
+    TOKEN_MORE        shift, and go to state 215
+    TOKEN_DOT         shift, and go to state 43
+
+    TOKEN_WHILE  reduce using rule 71 ($@5)
+    TOKEN_FOR    reduce using rule 73 ($@6)
+    $default     reduce using rule 69 ($@4)
+
+    FuncName               go to state 44
+    Type                   go to state 45
+    Block                  go to state 46
+    Statement              go to state 47
+    ReturnStatement        go to state 48
+    FunctionCall           go to state 49
+    Conditional            go to state 50
+    $@4                    go to state 51
+    $@5                    go to state 52
+    $@6                    go to state 53
+    ConditionalSwitch      go to state 54
+    Declaration            go to state 55
+    AssignmentDeclaration  go to state 56
+    Assignment             go to state 57
+
+
+State 214
+
+   83 ElseIfs: TOKEN_ELSE_IF TOKEN_LEFT_PAREN Exp $@10 TOKEN_RIGHT_PAREN Block $@11 ElseIfs .
+
+    $default  reduce using rule 83 (ElseIfs)
+
+
+State 215
+
+   94 ConditionalFor: TOKEN_FOR TOKEN_LEFT_PAREN ForDeclaration TOKEN_SHARP $@14 ForCondition $@15 TOKEN_SHARP $@16 ForStep $@17 $@18 TOKEN_RIGHT_PAREN TOKEN_LESS Statements TOKEN_MORE .
+
+    $default  reduce using rule 94 (ConditionalFor)

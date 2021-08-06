@@ -1,0 +1,82 @@
+.data
+backn: .asciiz "\n"
+.text
+.globl main
+
+
+positiveSum:
+    addiu $sp,$sp,-12
+    sw $ra,8($sp)
+    sw $sp,4($sp)
+    sw $fp,0($sp)
+    move $fp,$sp
+    addiu $sp,$sp,-4
+    sw $zero,0($sp)
+    addiu $sp,$sp,-4
+    sw $zero,0($sp)
+    sw $a0,-4(fp)
+    sw $a1,-8(fp)
+    addiu $sp,$sp,-4
+    sw $zero,0($sp)
+    lw $t0,-4($fp)
+    lw $t1,-8($fp)
+    add $t2,$t0,$t1
+    sw $t2,-12($fp)
+    lw $t0,-12($fp)
+    beq $t0,$zero,IF_6_NEXT
+
+_Block1:
+    lw $t0,-12($fp)
+    move $v0,$t0
+    lw $ra,8($fp)
+    lw $sp,4($fp)
+    lw $fp,0($fp)
+    addiu $sp,$sp,12
+    jr $ra
+    j IF_6_END
+
+IF_6_NEXT:
+
+_Block2:
+    li $t0,0
+    move $v0,$t0
+    lw $ra,8($fp)
+    lw $sp,4($fp)
+    lw $fp,0($fp)
+    addiu $sp,$sp,12
+    jr $ra
+
+IF_6_END:
+    lw $ra,8($fp)
+    lw $sp,4($fp)
+    lw $fp,0($fp)
+    addiu $sp,$sp,12
+    jr $ra
+.data
+s:	.word	0
+.text
+
+temp:
+    addiu $sp,$sp,-12
+    sw $ra,8($sp)
+    sw $sp,4($sp)
+    sw $fp,0($sp)
+    move $fp,$sp
+    li $t0,15
+    la $t1,s
+    sw $t0,0($t1)
+    lw $ra,8($fp)
+    lw $sp,4($fp)
+    lw $fp,0($fp)
+    addiu $sp,$sp,12
+    jr $ra
+
+main:
+    addiu $sp,$sp,-12
+    sw $ra,8($sp)
+    sw $sp,4($sp)
+    sw $fp,0($sp)
+    move $fp,$sp
+    li $t0,103
+    addiu $sp,$sp,-4
+    sw $t0,0($sp)
